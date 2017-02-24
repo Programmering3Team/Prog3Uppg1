@@ -1,9 +1,12 @@
 package moment;
 import backend.*;
-public class Main {
+import ui.UI;
 
+public class Main {
+	
 	public static void main(String[] args) {
 		
-		
+		UI ui = new UI();
+
 	}
 }
