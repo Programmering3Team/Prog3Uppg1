@@ -28,7 +28,7 @@ public class Stock {
 			+ stock +"&a="+ info1[1] + "&b=" + info1[0] +
 			"&c="+ info1[2] +"&d="+ info2[1] +"&e="+ info2[0] 
 			+"&f="+ info2[2] +"&g=d&ignore=.csv";
-			System.out.println(url);
+			//System.out.println(url);
 			read();
 			return true;
 		}else{
