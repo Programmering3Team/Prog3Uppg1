@@ -1,40 +1,45 @@
 package ui;
 
-import java.awt.GridLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
+import backend.Stock;
+
 public class UI extends JFrame {
 	
-	private final String TITLE = "Programmering 3 uppgift 1";
+	private final String TITLE = "Aktieanalys";
 	private final int WINDOW_WIDTH = 500;
 	private final int WINDOW_HEIGHT = 500;
 	
-	private JButton button;
-	private JTextField fieldTicker1, fieldTicker2;
-	private JTextField fieldStartDatum, fieldStopDatum;
+	private final String EUR = "EUR", SEK = "SEK";
+	private String selectedCurrency;
 	
+	private JTextField[] textFields;
+	private JRadioButton[] radioButtons;
+	
+	private JButton button;
+	
+	private JTextArea textArea;
 	
 	//Initializes the UI
 	public UI() {
         setTitle(TITLE); 
         setSize(WINDOW_WIDTH, WINDOW_HEIGHT); 
-        setLocationRelativeTo(null);         
+        setLocationRelativeTo(null);
         
         //layout
-//        setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
-//        setLayout(new GridLayout(5,5)); // tre rader, en kolumn
-        setLayout(new BoxLayout(this.getContentPane(), BoxLayout.PAGE_AXIS));
-        
-        //Labels
-        add(new JLabel("test"));
-        add(new JLabel("test"));
-        add(new JLabel("test"));
+        setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
         
         initTextFields();
+        initRadioButtons();
         initButtons();
+        initTextArea();
+//        initGraphPanel();
         
         setVisible(true); 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -44,30 +49,78 @@ public class UI extends JFrame {
 	 * Initializes the buttons and adds them to the frame
 	 */
 	private void initButtons() {
-		button = new JButton("Detta är en knapp");
+		button = new JButton("------- Do Query -------");
+		button.setAlignmentX(this.CENTER_ALIGNMENT);
 		button.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//Add event here
+				String ticker;
+				String startDate;
+				String endDate;
+				
+				
+				Stock stock = new Stock();
+//				stock.giveURL(stock, date1, date2, selectedCurrency);
 			}
 		});
 		add(button);
 	}
 	
 	/*
-	 * Initializes the text fields and adds them to the frame
+	 * Creates a pane, creates and adds radiobuttons to it and creates a button group.
+	 * Adds everything to the frame.
+	 */
+
+	private void initRadioButtons() {
+		JPanel panel = new JPanel();
+		ButtonGroup group = new ButtonGroup();
+		panel.setLayout(new FlowLayout());
+		radioButtons = new JRadioButton[3];
+		radioButtons[0] = new JRadioButton("EUR");
+		radioButtons[1] = new JRadioButton("USD");
+		radioButtons[2] = new JRadioButton("SEK");
+		
+		for (int i = 0; i < radioButtons.length; i++) {
+			panel.add(radioButtons[i]);
+			group.add(radioButtons[i]);
+		}
+		radioButtons[0].setSelected(true);
+		selectedCurrency = EUR;
+		add(panel);
+	}
+	
+	/*
+	 * Initializes the array of text fields (and labels to the fields) and adds them to the frame
 	 */
 	private void initTextFields() {
-		fieldTicker1 = new JTextField();
-		fieldTicker2 = new JTextField();
-		fieldStartDatum = new JTextField();
-		fieldStopDatum = new JTextField();
+		JLabel[] labels = new JLabel[4]; //Labels for the text fields
+		labels[0] = new JLabel("Ticker 1");
+		labels[1] = new JLabel("Ticker 2");
+		labels[2] = new JLabel("Startdatum dd.mm.yyyy");
+		labels[3] = new JLabel("Stopdaturm dd.mm.yyyy");
 		
-		add(fieldTicker1);
-		add(fieldTicker2);
-		add(fieldStartDatum);
-		add(fieldStopDatum);
+		textFields = new JTextField[4];
+		for (int i = 0; i < textFields.length; i++) {
+			textFields[i] = new JTextField();
+			textFields[i].setMaximumSize(new Dimension(200, 25));
+			textFields[i].setAlignmentX(CENTER_ALIGNMENT);
+			labels[i].setAlignmentX(CENTER_ALIGNMENT);
+			add(labels[i]);
+			add(textFields[i]);
+		}
+	}
+	
+	private void initTextArea() {
+		textArea = new JTextArea();
+		textArea.setEditable(false);
+		textArea.setAlignmentX(CENTER_ALIGNMENT);
+		add(textArea);
+	}
+	
+	private void initGraphPanel() {
+		JPanel panel = new JPanel();
+		panel.setBackground(Color.CYAN);
+		add(panel);
 	}
 
-    
 }
