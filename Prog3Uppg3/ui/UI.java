@@ -55,11 +55,14 @@ public class UI extends JFrame {
 				
 				updateSelectedCurrency();
 				
-//				Stock stock = new Stock();
-//				stock.UppdateInfo(ticker, startDate, endDate, selectedCurrency);
-//				System.out.println(stock.UppdateInfo(ticker, startDate, endDate, selectedCurrency));
+				Stock stock = new Stock();
+				// if works, return true
+				if (stock.UppdateInfo(ticker, startDate, endDate, selectedCurrency)) {
+					textArea.setText(stock.getData()); //Writes out the output to the text field
+				} else {
+					textArea.setText("Information entered, not valid. Check if date format is correct");
+				}
 				
-//				textArea.setText(stock.getData()); //Writes out the output to the text field
 			}
 		});
 		add(button);
