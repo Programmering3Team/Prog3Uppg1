@@ -5,25 +5,20 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.*;
-
 import backend.Stock;
 
 public class UI extends JFrame {
-	
 	private final String TITLE = "Aktieanalys";
 	private final int WINDOW_WIDTH = 500;
 	private final int WINDOW_HEIGHT = 500;
 	
-	private final String EUR = "EUR", SEK = "SEK";
+	private final String EUR = "EUR", SEK = "SEK", USD = "USD";
 	private String selectedCurrency;
 	
 	private JTextField[] textFields;
 	private JRadioButton[] radioButtons;
-	
 	private JButton button;
-	
 	private JTextArea textArea;
 	
 	//Initializes the UI
@@ -54,13 +49,17 @@ public class UI extends JFrame {
 		button.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String ticker;
-				String startDate;
-				String endDate;
+				String ticker = textFields[0].getText();
+				String startDate = textFields[2].getText();
+				String endDate = textFields[3].getText();
 				
+				updateSelectedCurrency();
 				
-				Stock stock = new Stock();
-//				stock.giveURL(stock, date1, date2, selectedCurrency);
+//				Stock stock = new Stock();
+//				stock.UppdateInfo(ticker, startDate, endDate, selectedCurrency);
+//				System.out.println(stock.UppdateInfo(ticker, startDate, endDate, selectedCurrency));
+				
+//				textArea.setText(stock.getData()); //Writes out the output to the text field
 			}
 		});
 		add(button);
@@ -87,6 +86,13 @@ public class UI extends JFrame {
 		radioButtons[0].setSelected(true);
 		selectedCurrency = EUR;
 		add(panel);
+	}
+	
+	//Updates the selected currency 
+	private void updateSelectedCurrency() {
+		if (radioButtons[0].isSelected()) selectedCurrency = EUR;
+		if (radioButtons[1].isSelected()) selectedCurrency = USD;
+		if (radioButtons[2].isSelected()) selectedCurrency = SEK;
 	}
 	
 	/*
