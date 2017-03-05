@@ -12,7 +12,7 @@ public class Stock {
 	private String url;
 	private ArrayList<String> values;
 	private String stock;
-	private Currency currency;
+	private Curr currency;
 	public Stock(){
 		values = new ArrayList<>();
 	}
@@ -24,7 +24,7 @@ public class Stock {
 		String[] info1 = date1.split("\\.");
 		String[] info2 = date2.split("\\.");
 		if (info1.length == 3 && info2.length == 3) {
-			currency = new Currency(curr, info1, info2);
+			currency = new Curr(curr, info1, info2);
 			if (!currency.read()) {
 				return false;
 			}
@@ -60,7 +60,7 @@ public class Stock {
 		
 	}
 	
-	public ArrayList<String> getData(){	//returns the values
+	public ArrayList<String> getValues(){	//returns the values
 		return values;
 	}
 	
@@ -77,13 +77,13 @@ public class Stock {
 		currency.printCurr();
 	}
 	
-	public ArrayList<String> makeReadable(){
+	public String getData(){
 		//makes a list like the one in mom1
 		ArrayList<Double> valuesNew = withCurr();
-		ArrayList<String> out = new ArrayList<>();
-		for (int i = 1; i < valuesNew.size(); i++) {
-			String[] temp = values.get(i).split(",");
-			out.add(temp[0] + " stock: " + stock + " close: " + valuesNew.get(i));
+		String out = "";
+		for (int i = 0; i < valuesNew.size(); i++) {
+			String[] temp = values.get(i + 1).split(",");
+			out = out + temp[0] + " stock: " + stock + " close: " + valuesNew.get(i) + "\n";
 		}
 		return out;
 	}
