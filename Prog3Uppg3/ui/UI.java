@@ -1,26 +1,20 @@
 package ui;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Graphics;
-import java.awt.GridLayout;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
-import javax.swing.border.Border;
 
 import backend.Stock;
+import general.Constants;
 
 public class UI extends JFrame {
 	private final String TITLE = "Aktieanalys";
 	private final int WINDOW_WIDTH = 500;
 	private final int WINDOW_HEIGHT = 700;
 	
-	private final String EUR = "EUR", SEK = "SEK", USD = null;
 	private String selectedCurrency;
 	
 	private JPanel fieldPanel;
@@ -40,7 +34,6 @@ public class UI extends JFrame {
         //layout
         setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS)); //Layout for the frame
 //        setLayout(new BorderLayout());
-        
         
         fieldPanel = new JPanel();
         fieldPanel.setLayout(new BoxLayout(fieldPanel, BoxLayout.Y_AXIS));
@@ -65,34 +58,32 @@ public class UI extends JFrame {
 		button.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String ticker1 = textFields[0].getText();
-				String ticker2 = textFields[1].getText();
-				String startDate = textFields[2].getText();
-				String endDate = textFields[3].getText();
-				
-				updateSelectedCurrency();
-				
-				Stock stock1 = new Stock();
-				Stock stock2 = new Stock();
-				
-				stock1.UppdateInfo(ticker1, startDate, endDate, selectedCurrency);
-				stock2.UppdateInfo(ticker2, startDate, endDate, selectedCurrency);
-				
-				textArea.setText(stock1.getData(stock2));
-				
-				// if works, return true
-//				if (stock.UppdateInfo(ticker, startDate, endDate, selectedCurrency)) {
-//					textArea.setText(stock.getData(stock)); //Writes out the output to the text field
-//				} else {
-//					textArea.setText("Information entered, not valid. Check if date format is correct");
-//				}
-				
-				diagram.clear();
-				diagram.drawDiagram(stock1.getOnlyValues(Stock.DATE));
-				
+				buttonClicked();
 			}
 		});
 		fieldPanel.add(button);
+	}
+	
+	//Action when "Do Querry" button is clicked
+	private void buttonClicked() {
+		String ticker1 = textFields[0].getText();
+		String ticker2 = textFields[1].getText();
+		String startDate = textFields[2].getText();
+		String endDate = textFields[3].getText();
+		
+		updateSelectedCurrency();
+		
+//		Stock stock1 = new Stock();
+//		Stock stock2 = new Stock();
+		
+//		stock1.UppdateInfo(ticker1, startDate, endDate, selectedCurrency);
+//		stock2.UppdateInfo(ticker2, startDate, endDate, selectedCurrency);
+		
+//		textArea.setText(stock1.getData(stock2));
+		
+		diagram.clear();
+//		stock1.withCurr();
+//		diagram.drawDiagram(stock1.getOnlyValues(Constants.DATE));
 	}
 	
 	/*
@@ -114,15 +105,15 @@ public class UI extends JFrame {
 			group.add(radioButtons[i]);
 		}
 		radioButtons[0].setSelected(true);
-		selectedCurrency = EUR;
+		selectedCurrency = Constants.EUR;
 		fieldPanel.add(panel);
 	}
 	
 	//Updates the selected currency 
 	private void updateSelectedCurrency() {
-		if (radioButtons[0].isSelected()) selectedCurrency = EUR;
-		if (radioButtons[1].isSelected()) selectedCurrency = USD;
-		if (radioButtons[2].isSelected()) selectedCurrency = SEK;
+		if (radioButtons[0].isSelected()) selectedCurrency = Constants.EUR;
+		if (radioButtons[1].isSelected()) selectedCurrency = Constants.USD;
+		if (radioButtons[2].isSelected()) selectedCurrency = Constants.SEK;
 	}
 	
 	/*
@@ -154,7 +145,6 @@ public class UI extends JFrame {
 		
 		JScrollPane scroll = new JScrollPane (textArea, 
 				   JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-
 		add(scroll);
 	}
 	
