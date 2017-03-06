@@ -2,8 +2,6 @@ package ui;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.geom.Line2D;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -17,15 +15,10 @@ public class Diagram extends JPanel {
 		lines = new LinkedList<Line>();
 	}
 	
-	public void drawDiagram(ArrayList<String> stockData) {
+	public void drawDiagram(ArrayList<Double> stockData) {
 		for (int i = 0; i < stockData.size(); i++) {
-//			addLine(10*i, 10*i, 10*i, 10*i, color);
+//			x1. y1. x2. y2
 		}
-		int valuex = 20;
-		int valuey = 100;
-		addLine(valuex, valuex, valuey, valuey, color);
-		
-//		System.out.println(value);
 	}
 
 	private void addLine(int x1, int x2, int x3, int x4, Color color) {

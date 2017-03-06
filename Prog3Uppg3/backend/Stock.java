@@ -104,7 +104,7 @@ public class Stock {
 		}
 		return temp;
 	}
-	
+
 	public ArrayList<Double> withCurr(){
 		ArrayList<String> curr = currency.getCurr();
 		ArrayList<Double> temp = new ArrayList<>();

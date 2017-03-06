@@ -20,7 +20,7 @@ public class UI extends JFrame {
 	private final int WINDOW_WIDTH = 500;
 	private final int WINDOW_HEIGHT = 700;
 	
-	private final String EUR = "EUR", SEK = "SEK", USD = null;
+	public final String EUR = "EUR", SEK = "SEK", USD = null;
 	private String selectedCurrency;
 	
 	private JPanel fieldPanel;
@@ -40,7 +40,6 @@ public class UI extends JFrame {
         //layout
         setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS)); //Layout for the frame
 //        setLayout(new BorderLayout());
-        
         
         fieldPanel = new JPanel();
         fieldPanel.setLayout(new BoxLayout(fieldPanel, BoxLayout.Y_AXIS));
@@ -65,34 +64,33 @@ public class UI extends JFrame {
 		button.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String ticker1 = textFields[0].getText();
-				String ticker2 = textFields[1].getText();
-				String startDate = textFields[2].getText();
-				String endDate = textFields[3].getText();
-				
-				updateSelectedCurrency();
-				
-				Stock stock1 = new Stock();
-				Stock stock2 = new Stock();
-				
-				stock1.UppdateInfo(ticker1, startDate, endDate, selectedCurrency);
-				stock2.UppdateInfo(ticker2, startDate, endDate, selectedCurrency);
-				
-				textArea.setText(stock1.getData(stock2));
-				
-				// if works, return true
-//				if (stock.UppdateInfo(ticker, startDate, endDate, selectedCurrency)) {
-//					textArea.setText(stock.getData(stock)); //Writes out the output to the text field
-//				} else {
-//					textArea.setText("Information entered, not valid. Check if date format is correct");
-//				}
-				
-				diagram.clear();
-				diagram.drawDiagram(stock1.getOnlyValues(Stock.DATE));
-				
+				buttonClicked();
 			}
 		});
 		fieldPanel.add(button);
+	}
+	
+	//Action when "Do Querry" button is clicked
+	private void buttonClicked() {
+		String ticker1 = textFields[0].getText();
+		String ticker2 = textFields[1].getText();
+		String startDate = textFields[2].getText();
+		String endDate = textFields[3].getText();
+		
+		updateSelectedCurrency();
+		
+		Stock stock1 = new Stock();
+		Stock stock2 = new Stock();
+		
+		stock1.UppdateInfo(ticker1, startDate, endDate, selectedCurrency);
+		stock2.UppdateInfo(ticker2, startDate, endDate, selectedCurrency);
+		
+		textArea.setText(stock1.getData(stock2));
+		
+		
+		diagram.clear();
+//		stock1.withCurr();
+//		diagram.drawDiagram(stock1.getOnlyValues(Stock.DATE));
 	}
 	
 	/*
@@ -154,7 +152,6 @@ public class UI extends JFrame {
 		
 		JScrollPane scroll = new JScrollPane (textArea, 
 				   JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-
 		add(scroll);
 	}
 	
