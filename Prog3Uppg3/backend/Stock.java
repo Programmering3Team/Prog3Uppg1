@@ -13,7 +13,7 @@ public class Stock {
 	private String stock;
 	private Curr currency;
 	
-	public Stock(String stock, String date1, String date2, String curr) throws Exception{
+	public Stock(String stock, String date1, String date2, String curr) throws Exception {
 		values = new ArrayList<>();
 		this.stock = stock;
 		String[] info1 = date1.split("\\.");
@@ -35,7 +35,7 @@ public class Stock {
 			}
 			
 		}else{
-			throw new Exception();
+			throw new InvalidDateExeption();
 		}
 	}
 	
@@ -152,5 +152,8 @@ public class Stock {
 	    long tmp = Math.round(value);
 	    return (double) tmp / factor;
 	}
-
+	
+	//Custom exeptions
+	public class InvalidDateExeption extends Exception { }
+	public class NoDataExeption extends Exception {}
 }
