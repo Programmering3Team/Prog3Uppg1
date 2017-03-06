@@ -20,7 +20,6 @@ public class Curr {
 				+ curr +"=X&a="+ info1[1] + "&b=" + info1[0] +
 				"&c="+ info1[2] +"&d="+ info2[1] +"&e="+ info2[0] 
 				+"&f="+ info2[2] +"&g=d&ignore=.csv";
-		System.out.println(url);
 	}
 	
 	public Boolean read(){
@@ -51,6 +50,12 @@ public class Curr {
 	
 	public ArrayList<String> getCurr() {
 		return currValues;
+	}
+	
+	public void makeDollar(int size){
+		for (int i = 0; i < size; i++) {
+			currValues.add("1.00,1.00,1.00,1.00,1.00,1.00");
+		}
 	}
 
 }

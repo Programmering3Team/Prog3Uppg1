@@ -20,7 +20,7 @@ public class UI extends JFrame {
 	private final int WINDOW_WIDTH = 500;
 	private final int WINDOW_HEIGHT = 700;
 	
-	private final String EUR = "EUR", SEK = "SEK", USD = "USD";
+	private final String EUR = "EUR", SEK = "SEK", USD = null;
 	private String selectedCurrency;
 	
 	private JPanel fieldPanel;
@@ -65,21 +65,30 @@ public class UI extends JFrame {
 		button.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-//				String ticker = textFields[0].getText();
-//				String startDate = textFields[2].getText();
-//				String endDate = textFields[3].getText();
-//				
-//				updateSelectedCurrency();
-//				
-//				Stock stock = new Stock();
-//				// if works, return true
+				String ticker1 = textFields[0].getText();
+				String ticker2 = textFields[1].getText();
+				String startDate = textFields[2].getText();
+				String endDate = textFields[3].getText();
+				
+				updateSelectedCurrency();
+				
+				Stock stock1 = new Stock();
+				Stock stock2 = new Stock();
+				
+				stock1.UppdateInfo(ticker1, startDate, endDate, selectedCurrency);
+				stock2.UppdateInfo(ticker2, startDate, endDate, selectedCurrency);
+				
+				textArea.setText(stock1.getData(stock2));
+				
+				// if works, return true
 //				if (stock.UppdateInfo(ticker, startDate, endDate, selectedCurrency)) {
-//					textArea.setText(stock.getData()); //Writes out the output to the text field
+//					textArea.setText(stock.getData(stock)); //Writes out the output to the text field
 //				} else {
 //					textArea.setText("Information entered, not valid. Check if date format is correct");
 //				}
+				
 				diagram.clear();
-				diagram.drawDiagram(null);
+				diagram.drawDiagram(stock1.getOnlyValues(Stock.DATE));
 				
 			}
 		});

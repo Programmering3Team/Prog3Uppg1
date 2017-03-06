@@ -8,11 +8,12 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 public class Stock {
-	
+	public static final int DATE = 0, OPEN = 1, HIGH = 2, LOW = 3, CLOSE = 4, VOLUME = 5, ADJ_CLOSE = 6;
 	private String url;
 	private ArrayList<String> values;
 	private String stock;
 	private Curr currency;
+	
 	public Stock(){
 		values = new ArrayList<>();
 	}
@@ -25,15 +26,20 @@ public class Stock {
 		String[] info2 = date2.split("\\.");
 		if (info1.length == 3 && info2.length == 3) {
 			currency = new Curr(curr, info1, info2);
-			if (!currency.read()) {
-				return false;
-			}
 			//Bygger upp urlen
 			url = "http://ichart.finance.yahoo.com/table.csv?s="
 			+ stock +"&a="+ info1[1] + "&b=" + info1[0] +
 			"&c="+ info1[2] +"&d="+ info2[1] +"&e="+ info2[0] 
 			+"&f="+ info2[2] +"&g=d&ignore=.csv";
 			read();
+			if (curr == null) {
+				currency.makeDollar(values.size());
+			}else{
+				if (!currency.read()) {
+					return false;
+				}
+			}
+			
 			return true;
 		}else{
 			return false;
@@ -77,13 +83,14 @@ public class Stock {
 		currency.printCurr();
 	}
 	
-	public String getData(){
+	public String getData(Stock theOtherOne){
 		//makes a list like the one in mom1
 		ArrayList<Double> valuesNew = withCurr();
+		ArrayList<Double> valuesNew2 = theOtherOne.withCurr();
 		String out = "";
 		for (int i = 0; i < valuesNew.size(); i++) {
 			String[] temp = values.get(i + 1).split(",");
-			out = out + temp[0] + " stock: " + stock + " close: " + valuesNew.get(i) + "\n";
+			out = out + temp[0] + " Stock: " + stock + " close: " + valuesNew.get(i) + " - Stock: " + theOtherOne.getStockName() + " close: " + valuesNew2.get(i) + "\n";
 		}
 		return out;
 	}
@@ -102,13 +109,31 @@ public class Stock {
 		ArrayList<String> curr = currency.getCurr();
 		ArrayList<Double> temp = new ArrayList<>();
 		for (int i = 1; i < values.size(); i++) {
-			double v = Double.parseDouble(values.get(i).split(",")[2]);
-			//System.out.println(curr.get(i).split(",")[2] + "\n");
-			double c = Double.parseDouble(curr.get(i).split(",")[2]);
-			temp.add(v*c);
+			double v = Double.parseDouble(values.get(i).split(",")[4]);
+			double c = Double.parseDouble(curr.get(i).split(",")[4]);
+			temp.add(round(v*c, 2));
 		}
 		return temp;
 	}
 	
+	public String getSingleData(int place,Stock theOtherOne){
+		String out = "";
+		ArrayList<String> curr = currency.getCurr();
+		ArrayList<Double> valuesNew2 = theOtherOne.withCurr();
+		double v = Double.parseDouble(values.get(place).split(",")[4]);
+		double c = Double.parseDouble(curr.get(place).split(",")[4]);
+		c = round(c*v, 2);
+		String[] temp = values.get(place + 1).split(",");
+		out = temp[0] + " Stock: " + stock + " close: " + c + " - Stock: " + theOtherOne.getStockName() + " close: " + valuesNew2.get(place);
+		return out;
+	}
+	
+	private static double round(double value, int places) {
+	    if (places < 0) throw new IllegalArgumentException();
+	    long factor = (long) Math.pow(10, places);
+	    value = value * factor;
+	    long tmp = Math.round(value);
+	    return (double) tmp / factor;
+	}
 
 }

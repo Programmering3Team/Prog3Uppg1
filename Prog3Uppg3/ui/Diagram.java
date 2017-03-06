@@ -18,7 +18,7 @@ public class Diagram extends JPanel {
 	}
 	
 	public void drawDiagram(ArrayList<String> stockData) {
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < stockData.size(); i++) {
 //			addLine(10*i, 10*i, 10*i, 10*i, color);
 		}
 		int valuex = 20;
