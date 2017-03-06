@@ -13,7 +13,7 @@ public class UI extends JFrame {
 	private final int WINDOW_WIDTH = 500;
 	private final int WINDOW_HEIGHT = 500;
 	
-	private final String EUR = "EUR", SEK = "SEK", USD = "USD";
+	private final String EUR = "EUR", SEK = "SEK", USD = null;
 	private String selectedCurrency;
 	
 	private JTextField[] textFields;
@@ -58,7 +58,7 @@ public class UI extends JFrame {
 				Stock stock = new Stock();
 				// if works, return true
 				if (stock.UppdateInfo(ticker, startDate, endDate, selectedCurrency)) {
-					textArea.setText(stock.getData()); //Writes out the output to the text field
+					textArea.setText(stock.getData(null)); //Writes out the output to the text field
 				} else {
 					textArea.setText("Information entered, not valid. Check if date format is correct");
 				}
