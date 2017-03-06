@@ -97,9 +97,8 @@ public class Stock {
 		return stock;
 	}
 	
-	
+	//makes a list like the one in mom1
 	public String getData(Stock theOtherOne){
-		//makes a list like the one in mom1
 		ArrayList<Double> valuesNew = withCurr();
 		ArrayList<Double> valuesNew2 = theOtherOne.withCurr();
 		String out = "";
@@ -109,11 +108,10 @@ public class Stock {
 		}
 		return out;
 	}
-	
+	//The csv file has a lot of different values. type in the type field what you want
+	//0 = date, 1 = open, 2 = high, 3 = low, 4 = close, 5 = volume, 6 = adjusted close
+	//it can return the date and all the above but only as a list of strings and not adjusted to the given currency.		
 	public ArrayList<String> getOnlyValues(int type){
-		//The csv file has a lot of different values. type in the type field what you want
-		//0 = date, 1 = open, 2 = high, 3 = low, 4 = close, 5 = volume, 6 = adjusted close
-		//it can return the date and all the above but only as a list of strings and not adjusted to the given currency.
 		ArrayList<String> temp = new ArrayList<>();
 		for (int i = 1; i < values.size(); i++) {
 			temp.add(values.get(i).split(",")[type]);
@@ -121,8 +119,8 @@ public class Stock {
 		return temp;
 	}
 	
+	//Returns a list of doubles that are adjusted with the given currency.
 	public ArrayList<Double> withCurr(){
-		//Returns a list of doubles that are adjusted with the given currency.
 		ArrayList<String> curr = currency.getCurr();
 		ArrayList<Double> temp = new ArrayList<>();
 		for (int i = 1; i < values.size(); i++) {
@@ -132,9 +130,8 @@ public class Stock {
 		}
 		return temp;
 	}
-	
+	//Returns the same string as getData but only one line.
 	public String getSingleData(int place,Stock theOtherOne){
-		//Returns the same string as getData but only one line.
 		String out = "";
 		ArrayList<String> curr = currency.getCurr();
 		ArrayList<Double> valuesNew2 = theOtherOne.withCurr();
