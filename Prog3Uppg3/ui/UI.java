@@ -1,26 +1,20 @@
 package ui;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Graphics;
-import java.awt.GridLayout;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
-import javax.swing.border.Border;
 
 import backend.Stock;
+import general.Constants;
 
 public class UI extends JFrame {
 	private final String TITLE = "Aktieanalys";
 	private final int WINDOW_WIDTH = 500;
 	private final int WINDOW_HEIGHT = 700;
 	
-	public final String EUR = "EUR", SEK = "SEK", USD = null;
 	private String selectedCurrency;
 	
 	private JPanel fieldPanel;
@@ -79,18 +73,17 @@ public class UI extends JFrame {
 		
 		updateSelectedCurrency();
 		
-		Stock stock1 = new Stock();
-		Stock stock2 = new Stock();
+//		Stock stock1 = new Stock();
+//		Stock stock2 = new Stock();
 		
-		stock1.UppdateInfo(ticker1, startDate, endDate, selectedCurrency);
-		stock2.UppdateInfo(ticker2, startDate, endDate, selectedCurrency);
+//		stock1.UppdateInfo(ticker1, startDate, endDate, selectedCurrency);
+//		stock2.UppdateInfo(ticker2, startDate, endDate, selectedCurrency);
 		
-		textArea.setText(stock1.getData(stock2));
-		
+//		textArea.setText(stock1.getData(stock2));
 		
 		diagram.clear();
 //		stock1.withCurr();
-//		diagram.drawDiagram(stock1.getOnlyValues(Stock.DATE));
+//		diagram.drawDiagram(stock1.getOnlyValues(Constants.DATE));
 	}
 	
 	/*
@@ -112,15 +105,15 @@ public class UI extends JFrame {
 			group.add(radioButtons[i]);
 		}
 		radioButtons[0].setSelected(true);
-		selectedCurrency = EUR;
+		selectedCurrency = Constants.EUR;
 		fieldPanel.add(panel);
 	}
 	
 	//Updates the selected currency 
 	private void updateSelectedCurrency() {
-		if (radioButtons[0].isSelected()) selectedCurrency = EUR;
-		if (radioButtons[1].isSelected()) selectedCurrency = USD;
-		if (radioButtons[2].isSelected()) selectedCurrency = SEK;
+		if (radioButtons[0].isSelected()) selectedCurrency = Constants.EUR;
+		if (radioButtons[1].isSelected()) selectedCurrency = Constants.USD;
+		if (radioButtons[2].isSelected()) selectedCurrency = Constants.SEK;
 	}
 	
 	/*

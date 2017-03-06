@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 public class Stock {
-	public static final int DATE = 0, OPEN = 1, HIGH = 2, LOW = 3, CLOSE = 4, VOLUME = 5, ADJ_CLOSE = 6;
 	private String url;
 	private ArrayList<String> values;
 	private String stock;
