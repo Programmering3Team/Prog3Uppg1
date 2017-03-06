@@ -10,7 +10,6 @@ import javax.swing.JOptionPane;
 
 public class Curr {
 	
-	//http://ichart.finance.yahoo.com/table.csv?s=SEK=X&a=2&b=7&c=2015&d=3&e=7&f=2015&g=d&ignore=.csv
 	private String url;
 	private ArrayList<String> currValues;
 	
