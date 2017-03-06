@@ -8,6 +8,7 @@ import java.util.LinkedList;
 
 import javax.swing.JPanel;
 
+@SuppressWarnings("serial")
 public class Diagram extends JPanel {
 	private LinkedList<Line> lines = new LinkedList<Line>();
 	private Color color;
@@ -24,10 +25,11 @@ public class Diagram extends JPanel {
 		float withMultiplier = this.getWidth() / stockValues.size();
 		
 		int x1 = 0;
-		int y1 = (int) (stockValues.get(0) * heightMultiplier);
+		int y1 = (int) (stockValues.get(0) * 10);
 		for (int i = 1; i <= stockValues.size(); i++) {
 			int x2 = (int) (i * withMultiplier);
-			int y2 = (int) (stockValues.get(i) * heightMultiplier);
+//			int y2 = (int) (stockValues.get(i) * 10);
+			int y2 = 10;
 			
 			addLine(x1, y1, x2, y2, color);
 			x1 = x2;

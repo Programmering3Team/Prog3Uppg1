@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.*;
@@ -69,6 +70,12 @@ public class UI extends JFrame {
 	
 	//Action when "Do Querry" button is clicked
 	private void buttonClicked() {
+		//If text aren't filled, break
+		if (textFieldsAreFilled() == false) {
+			textArea.setText("Please fill in the text fields");
+			return;
+		}
+		
 		String ticker1 = textFields[0].getText();
 		String ticker2 = textFields[1].getText();
 		String startDate = textFields[2].getText();
@@ -83,15 +90,14 @@ public class UI extends JFrame {
 			
 			diagram.clear();
 			diagram.drawDiagram(stock1.withCurr(), stock1.getOnlyValues(Constants.DATE));
+			
 		} catch (InvalidDateExeption e) {
 			textArea.setText("Invalid date");
+		} catch (IOException e2) {
+			textArea.setText("No Data found");
 		} catch (Exception e) {
-			textArea.setText("ERROR!");
+			textArea.setText("Undifiend error");
 		}
-		
-
-		
-		
 		
 //		stock1.withCurr();
 //		diagram.drawDiagram(stock1.getOnlyValues(Constants.DATE));
@@ -99,6 +105,14 @@ public class UI extends JFrame {
 //		diagram.drawDiagram(stockValues, stockDates);
 	}
 	
+	private boolean textFieldsAreFilled() {
+		for (int i = 0; i < textFields.length; i++) {
+			if (textFields[i].getText().equals("")) return false;
+		}
+		return true;
+		
+	}
+
 	/*
 	 * Creates a pane, creates and adds radiobuttons to it and creates a button group.
 	 * Adds everything to the frame.
