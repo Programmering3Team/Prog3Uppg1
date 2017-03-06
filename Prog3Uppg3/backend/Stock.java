@@ -14,13 +14,8 @@ public class Stock {
 	private String stock;
 	private Curr currency;
 	
-	public Stock(){
+	public Stock(String stock, String date1, String date2, String curr) throws Exception{
 		values = new ArrayList<>();
-	}
-	
-	public Boolean UppdateInfo(String stock, String date1, String date2, String curr){
-		//date comes in the following form: dd.mm.yyyy
-		//january is 00 and december is 11
 		this.stock = stock;
 		String[] info1 = date1.split("\\.");
 		String[] info2 = date2.split("\\.");
@@ -36,17 +31,45 @@ public class Stock {
 				currency.makeDollar(values.size());
 			}else{
 				if (!currency.read()) {
-					return false;
+					throw new Exception();
 				}
 			}
 			
-			return true;
 		}else{
-			return false;
+			throw new Exception();
 		}
-		//http://ichart.finance.yahoo.com/table.csv?s=SEK=X&a=2&b=7&c=2015&d=3&e=7&f=2015&g=d&ignore=.csv
-		//http://ichart.finance.yahoo.com/table.csv?s=fb&a=02&b=19&c=2014&d=02&e=26&f=2014&g=d&ignore=.csv
 	}
+	
+//	public Boolean UppdateInfo(String stock, String date1, String date2, String curr){
+//		//Creates the list of the stock.
+//		//date comes in the following form: dd.mm.yyyy
+//		//january is 00 and december is 11
+//		this.stock = stock;
+//		String[] info1 = date1.split("\\.");
+//		String[] info2 = date2.split("\\.");
+//		if (info1.length == 3 && info2.length == 3) {
+//			currency = new Curr(curr, info1, info2);
+//			//Bygger upp urlen
+//			url = "http://ichart.finance.yahoo.com/table.csv?s="
+//			+ stock +"&a="+ info1[1] + "&b=" + info1[0] +
+//			"&c="+ info1[2] +"&d="+ info2[1] +"&e="+ info2[0] 
+//			+"&f="+ info2[2] +"&g=d&ignore=.csv";
+//			read();
+//			if (curr == null) {
+//				currency.makeDollar(values.size());
+//			}else{
+//				if (!currency.read()) {
+//					return false;
+//				}
+//			}
+//			
+//			return true;
+//		}else{
+//			return false;
+//		}
+//		//http://ichart.finance.yahoo.com/table.csv?s=SEK=X&a=2&b=7&c=2015&d=3&e=7&f=2015&g=d&ignore=.csv
+//		//http://ichart.finance.yahoo.com/table.csv?s=fb&a=02&b=19&c=2014&d=02&e=26&f=2014&g=d&ignore=.csv
+//	}
 	
 	private void read(){
 		String line = "";
@@ -66,7 +89,7 @@ public class Stock {
 		
 	}
 	
-	public ArrayList<String> getValues(){	//returns the values
+	public ArrayList<String> getValues(){	//returns the raw csv file
 		return values;
 	}
 	
@@ -74,14 +97,6 @@ public class Stock {
 		return stock;
 	}
 	
-	public void print(){
-		//prints the csv file as it is
-		for (int i = 1; i < values.size(); i++) {
-			System.out.println(values.get(i));
-		}
-		System.out.println("\n\n\n\n");
-		currency.printCurr();
-	}
 	
 	public String getData(Stock theOtherOne){
 		//makes a list like the one in mom1
@@ -98,6 +113,7 @@ public class Stock {
 	public ArrayList<String> getOnlyValues(int type){
 		//The csv file has a lot of different values. type in the type field what you want
 		//0 = date, 1 = open, 2 = high, 3 = low, 4 = close, 5 = volume, 6 = adjusted close
+		//it can return the date and all the above but only as a list of strings and not adjusted to the given currency.
 		ArrayList<String> temp = new ArrayList<>();
 		for (int i = 1; i < values.size(); i++) {
 			temp.add(values.get(i).split(",")[type]);
@@ -106,6 +122,7 @@ public class Stock {
 	}
 	
 	public ArrayList<Double> withCurr(){
+		//Returns a list of doubles that are adjusted with the given currency.
 		ArrayList<String> curr = currency.getCurr();
 		ArrayList<Double> temp = new ArrayList<>();
 		for (int i = 1; i < values.size(); i++) {
@@ -117,6 +134,7 @@ public class Stock {
 	}
 	
 	public String getSingleData(int place,Stock theOtherOne){
+		//Returns the same string as getData but only one line.
 		String out = "";
 		ArrayList<String> curr = currency.getCurr();
 		ArrayList<Double> valuesNew2 = theOtherOne.withCurr();
