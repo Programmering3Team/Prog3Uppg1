@@ -3,6 +3,7 @@ package ui;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 
 import javax.swing.JPanel;
@@ -13,16 +14,29 @@ public class Diagram extends JPanel {
 	
 	public Diagram() {
 		lines = new LinkedList<Line>();
+		color = Color.RED;
 	}
 	
-	public void drawDiagram(ArrayList<Double> stockData) {
-		for (int i = 0; i < stockData.size(); i++) {
-//			x1. y1. x2. y2
+	public void drawDiagram(ArrayList<Double> stockValues, ArrayList<String> stockDates) {
+		int minValue = (int) (Collections.min(stockValues) * 1);
+		int maxValue = (int) (Collections.max(stockValues) * 1);
+		float heightMultiplier = this.getHeight() / (maxValue - minValue);
+		float withMultiplier = this.getWidth() / stockValues.size();
+		
+		int x1 = 0;
+		int y1 = (int) (stockValues.get(0) * heightMultiplier);
+		for (int i = 1; i <= stockValues.size(); i++) {
+			int x2 = (int) (i * withMultiplier);
+			int y2 = (int) (stockValues.get(i) * heightMultiplier);
+			
+			addLine(x1, y1, x2, y2, color);
+			x1 = x2;
+			y1 = y2;
 		}
 	}
 
-	private void addLine(int x1, int x2, int x3, int x4, Color color) {
-	    lines.add(new Line(x1,x2,x3,x4, color));        
+	private void addLine(int x1, int y1, int x2, int y2, Color color) {
+	    lines.add(new Line(x1,y1,x2,y2, color));        
 	    repaint();
 	}
 

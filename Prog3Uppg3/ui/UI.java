@@ -5,9 +5,12 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
 import javax.swing.*;
 
 import backend.Stock;
+import backend.Stock.InvalidDateExeption;
 import general.Constants;
 
 public class UI extends JFrame {
@@ -73,17 +76,27 @@ public class UI extends JFrame {
 		
 		updateSelectedCurrency();
 		
-//		Stock stock1 = new Stock();
-//		Stock stock2 = new Stock();
+		try {
+			Stock stock1 = new Stock(ticker1, startDate, endDate, selectedCurrency);
+			Stock stock2 = new Stock(ticker2, startDate, endDate, selectedCurrency);
+			textArea.setText(stock1.getData(stock2));
+			
+			diagram.clear();
+			diagram.drawDiagram(stock1.withCurr(), stock1.getOnlyValues(Constants.DATE));
+		} catch (InvalidDateExeption e) {
+			textArea.setText("Invalid date");
+		} catch (Exception e) {
+			textArea.setText("ERROR!");
+		}
 		
-//		stock1.UppdateInfo(ticker1, startDate, endDate, selectedCurrency);
-//		stock2.UppdateInfo(ticker2, startDate, endDate, selectedCurrency);
+
 		
-//		textArea.setText(stock1.getData(stock2));
 		
-		diagram.clear();
+		
 //		stock1.withCurr();
 //		diagram.drawDiagram(stock1.getOnlyValues(Constants.DATE));
+		
+//		diagram.drawDiagram(stockValues, stockDates);
 	}
 	
 	/*
@@ -150,7 +163,7 @@ public class UI extends JFrame {
 	
 	private void initGraphPanel() {
 		diagram = new Diagram();
-		diagram.setBackground(Color.CYAN);
+		diagram.setBackground(Color.BLACK);
 		diagram.setMinimumSize(new Dimension(500, 200));
 		add(diagram);
 	}

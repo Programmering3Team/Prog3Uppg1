@@ -1,6 +1,16 @@
 package general;
 
 public final class Constants {
-	public static final int DATE = 0, OPEN = 1, HIGH = 2, LOW = 3, CLOSE = 4, VOLUME = 5, ADJ_CLOSE = 6;
-	public static final String EUR = "EUR", SEK = "SEK", USD = null;
+	//CSV stock format constants
+	public static final int DATE = 0;
+	public static final int OPEN = 1;
+	public static final int HIGH = 2;
+	public static final int LOW = 3;
+	public static final int CLOSE = 4;
+	public static final int VOLUME = 5;
+	public static final int ADJ_CLOSE = 6;
+	//Currency constants
+	public static final String EUR = "EUR"; 
+	public static final String SEK = "SEK";
+	public static final String USD = null;
 }
