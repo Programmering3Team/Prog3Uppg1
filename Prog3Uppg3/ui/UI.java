@@ -6,7 +6,6 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.swing.*;
 
@@ -37,7 +36,6 @@ public class UI extends JFrame {
         
         //layout
         setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS)); //Layout for the frame
-//        setLayout(new BorderLayout());
         
         fieldPanel = new JPanel();
         fieldPanel.setLayout(new BoxLayout(fieldPanel, BoxLayout.Y_AXIS));
@@ -72,17 +70,14 @@ public class UI extends JFrame {
 	private void buttonClicked() {
 		//If text aren't filled, break
 		if (textFieldsAreFilled() == false) {
-			textArea.setText("Please fill in the text fields");
+			textArea.setText("One or more text fields are empty.\nPlease enter the information and try again.");
 			return;
 		}
-		
 		String ticker1 = textFields[0].getText();
 		String ticker2 = textFields[1].getText();
 		String startDate = textFields[2].getText();
 		String endDate = textFields[3].getText();
-		
 		updateSelectedCurrency();
-		
 		try {
 			Stock stock1 = new Stock(ticker1, startDate, endDate, selectedCurrency);
 			Stock stock2 = new Stock(ticker2, startDate, endDate, selectedCurrency);
@@ -91,20 +86,15 @@ public class UI extends JFrame {
 			graph.clear();
 			graph.drawDiagram(stock1.withCurr(), stock1.getOnlyValues(Constants.DATE), Color.RED);
 			graph.drawDiagram(stock2.withCurr(), stock2.getOnlyValues(Constants.DATE), Color.GREEN);
-			
-			
 		} catch (InvalidDateExeption e) {
-			textArea.setText("Invalid date");
+			textArea.setText("Invalid date\nEnter the date in the specified format.");
 		} catch (IOException e2) {
-			textArea.setText("No Data found");
+			textArea.setText("Could not find data.\nTicker entered is invalid or there is no internet connection");
+		} catch (IndexOutOfBoundsException e) {
+			textArea.setText("Invalid date\nEnter the date in the specified format.");
 		} catch (Exception e) {
-			textArea.setText("Undifiend error");
+			textArea.setText(e.getMessage());
 		}
-		
-//		stock1.withCurr();
-//		diagram.drawDiagram(stock1.getOnlyValues(Constants.DATE));
-		
-//		diagram.drawDiagram(stockValues, stockDates);
 	}
 	
 	private boolean textFieldsAreFilled() {
@@ -112,7 +102,6 @@ public class UI extends JFrame {
 			if (textFields[i].getText().equals("")) return false;
 		}
 		return true;
-		
 	}
 
 	/*
