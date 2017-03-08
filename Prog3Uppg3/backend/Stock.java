@@ -18,6 +18,8 @@ public class Stock {
 		String[] info1 = date1.split("\\.");
 		String[] info2 = date2.split("\\.");
 		if (info1.length == 3 && info2.length == 3) {
+			info1[1] = fixDate(info1);
+			info2[1] = fixDate(info2);
 			currency = new Curr(curr, info1, info2);
 			//Bygger upp urlen
 			url = "http://ichart.finance.yahoo.com/table.csv?s="
@@ -50,6 +52,26 @@ public class Stock {
 		}
 		buf.close();
 		
+	}
+	
+	private String fixDate(String[] date) throws InvalidDateExeption{
+		String mon = "";
+		try {
+			for (int i = 0; i < date.length; i++) {
+				int monInt = Integer.parseInt(date[i]);
+				if (i == 1) {
+					monInt--;
+					if (monInt < 0) {
+						throw new InvalidDateExeption();
+					}
+					mon = "" + monInt;
+				}
+			}
+			
+		} catch (Exception e) {
+			throw new InvalidDateExeption();
+		}
+		return mon;
 	}
 	
 	public ArrayList<String> getValues(){	//returns the raw csv file
