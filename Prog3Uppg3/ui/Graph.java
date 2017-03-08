@@ -9,32 +9,40 @@ import java.util.LinkedList;
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
-public class Diagram extends JPanel {
+public class Graph extends JPanel {
 	private LinkedList<Line> lines = new LinkedList<Line>();
 	private Color color;
 	
-	public Diagram() {
+	public Graph() {
 		lines = new LinkedList<Line>();
 		color = Color.RED;
 	}
 	
-	public void drawDiagram(ArrayList<Double> stockValues, ArrayList<String> stockDates) {
-		int minValue = (int) (Collections.min(stockValues) * 1);
-		int maxValue = (int) (Collections.max(stockValues) * 1);
-		float heightMultiplier = this.getHeight() / (maxValue - minValue);
-		float withMultiplier = this.getWidth() / stockValues.size();
+	public void drawDiagram(ArrayList<Double> stockValues, ArrayList<String> stockDates, Color color) {
+		double minValue = Collections.min(stockValues);
+		double maxValue =  Collections.max(stockValues); 
+		double valueRange = maxValue - minValue;
+		double scaleRange = this.getHeight();
 		
+		double widthMultiplier = (this.getWidth() / stockValues.size()) + 1;
+	
 		int x1 = 0;
-		int y1 = (int) (stockValues.get(0) * 10);
-		for (int i = 1; i <= stockValues.size(); i++) {
-			int x2 = (int) (i * withMultiplier);
-//			int y2 = (int) (stockValues.get(i) * 10);
-			int y2 = 10;
-			
+		int y1 = this.getHeight() - (getPosition(stockValues.get(0), scaleRange, valueRange, maxValue));
+		
+		for (int i = 1; i < stockValues.size(); i++) {
+			int x2 = (int) (i * widthMultiplier);
+			int y2 = this.getHeight() - (getPosition(stockValues.get(i), scaleRange, valueRange, maxValue));
+
 			addLine(x1, y1, x2, y2, color);
 			x1 = x2;
 			y1 = y2;
 		}
+	}
+
+	private int getPosition(double value, double scaleRange, double valueRange, double maxValue) {
+		double temp = (maxValue - value) / valueRange;
+		int y = (int) (temp * scaleRange);
+		return y;
 	}
 
 	private void addLine(int x1, int y1, int x2, int y2, Color color) {

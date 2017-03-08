@@ -27,7 +27,7 @@ public class UI extends JFrame {
 	private JButton button;
 	private JTextArea textArea;
 	
-	private Diagram diagram;
+	private Graph graph;
 	
 	//Initializes the UI
 	public UI() {
@@ -88,8 +88,10 @@ public class UI extends JFrame {
 			Stock stock2 = new Stock(ticker2, startDate, endDate, selectedCurrency);
 			textArea.setText(stock1.getData(stock2));
 			
-			diagram.clear();
-			diagram.drawDiagram(stock1.withCurr(), stock1.getOnlyValues(Constants.DATE));
+			graph.clear();
+			graph.drawDiagram(stock1.withCurr(), stock1.getOnlyValues(Constants.DATE), Color.RED);
+			graph.drawDiagram(stock2.withCurr(), stock2.getOnlyValues(Constants.DATE), Color.GREEN);
+			
 			
 		} catch (InvalidDateExeption e) {
 			textArea.setText("Invalid date");
@@ -176,10 +178,10 @@ public class UI extends JFrame {
 	}
 	
 	private void initGraphPanel() {
-		diagram = new Diagram();
-		diagram.setBackground(Color.BLACK);
-		diagram.setMinimumSize(new Dimension(500, 200));
-		add(diagram);
+		graph = new Graph();
+		graph.setBackground(Color.BLACK);
+		graph.setMinimumSize(new Dimension(500, 200));
+		add(graph);
 	}
 
 }
