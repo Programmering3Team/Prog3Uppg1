@@ -27,12 +27,11 @@ public class Stock {
 			"&c="+ info1[2] +"&d="+ info2[1] +"&e="+ info2[0] 
 			+"&f="+ info2[2] +"&g=d&ignore=.csv";
 			read();
+			
 			if (curr == null) {
 				currency.makeDollar(values.size());
 			}else{
-				if (!currency.read()) {
-					throw new Exception();
-				}
+				currency.read();
 			}
 			
 		}else{
@@ -51,7 +50,6 @@ public class Stock {
 			line = buf.readLine();
 		}
 		buf.close();
-		
 	}
 	
 	private String fixDate(String[] date) throws InvalidDateExeption{

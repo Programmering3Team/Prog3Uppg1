@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 public class Curr {
-	
 	private String url;
 	private ArrayList<String> currValues;
 	
@@ -21,24 +20,16 @@ public class Curr {
 				+"&f="+ info2[2] +"&g=d&ignore=.csv";
 	}
 	
-	public Boolean read(){
+	public void read() throws IOException {
 		String line = "";
-		try {
-			URL URL = new URL(url); 
-			BufferedReader buf = new BufferedReader(new InputStreamReader(URL.openStream()));
+		URL URL = new URL(url); 
+		BufferedReader buf = new BufferedReader(new InputStreamReader(URL.openStream()));
+		line = buf.readLine();
+		while (line != null) { 
+			currValues.add(line); 
 			line = buf.readLine();
-			while (line != null) { 
-				currValues.add(line); 
-				line = buf.readLine();
-			}
-			buf.close();
-			return true;
-			
-		} catch (IOException e) {
-			JOptionPane.showMessageDialog(null, "Could not find currency file");
-			return false;
 		}
-		
+		buf.close();
 	}
 	
 	public void printCurr(){
@@ -51,10 +42,9 @@ public class Curr {
 		return currValues;
 	}
 	
-	public void makeDollar(int size){
+	public void makeDollar(int size) {
 		for (int i = 0; i < size; i++) {
 			currValues.add("1.00,1.00,1.00,1.00,1.00,1.00");
 		}
 	}
-
 }
