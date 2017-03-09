@@ -84,7 +84,7 @@ public class Stock {
 		ArrayList<Double> valuesNew = withCurr();
 		ArrayList<Double> valuesNew2 = theOtherOne.withCurr();
 		String out = "";
-		for (int i = 0; i < valuesNew.size(); i++) {
+		for (int i = valuesNew.size()-1; i >= 0; i--) {
 			String[] temp = values.get(i + 1).split(",");
 			out = out + temp[0] + " Stock: " + stock + " close: " + valuesNew.get(i) + " - Stock: " + theOtherOne.getStockName() + " close: " + valuesNew2.get(i) + "\n";
 		}

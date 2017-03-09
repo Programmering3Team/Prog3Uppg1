@@ -24,7 +24,7 @@ public class Graph extends JPanel {
 		double valueRange = maxValue - minValue;
 		double scaleRange = this.getHeight();
 		
-		double widthMultiplier = (this.getWidth() / stockValues.size()) + 1;
+		double widthMultiplier = ((this.getWidth()*1.06f) / stockValues.size());
 	
 		int x1 = 0;
 		int y1 = this.getHeight() - (getPosition(stockValues.get(0), scaleRange, valueRange, maxValue));
