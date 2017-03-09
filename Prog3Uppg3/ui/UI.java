@@ -50,7 +50,6 @@ public class UI extends JFrame {
         setVisible(true); 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
-
 	/*
 	 * Initializes the buttons and adds them to the frame
 	 */
@@ -172,5 +171,4 @@ public class UI extends JFrame {
 		graph.setMinimumSize(new Dimension(500, 200));
 		add(graph);
 	}
-
 }
