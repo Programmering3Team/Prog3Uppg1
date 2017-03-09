@@ -90,7 +90,7 @@ public class UI extends JFrame {
 		} catch (IOException e2) {
 			textArea.setText("Could not find data.\nTicker entered is invalid or there is no internet connection");
 		} catch (IndexOutOfBoundsException e) {
-			textArea.setText("Invalid date\nEnter the date in the specified format.");
+			textArea.setText("Could not find the currency data or the stock data for the given time\nChange the currency or date.");
 		} catch (Exception e) {
 			textArea.setText(e.getMessage());
 		}
