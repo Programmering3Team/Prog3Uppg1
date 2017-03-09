@@ -6,8 +6,6 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
 
-import javax.swing.JOptionPane;
-
 public class Curr {
 	private String url;
 	private ArrayList<String> currValues;
