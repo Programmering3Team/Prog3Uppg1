@@ -27,9 +27,8 @@ public class MouseListener implements MouseMotionListener{
 		this.y = e.getY();
 //		System.out.println("musen på " + (e.getX() + ", " + e.getY()));
 		if (graph.getStock1() != null) {
-			
-			System.out.println(graph.getStock1().getSingleData(x));
-			
+			graph.getLabel1().setText(graph.getStock1().getSingleData(x));
+			graph.getLabel2().setText(graph.getStock2().getSingleData(x));
 		}
 	}
 

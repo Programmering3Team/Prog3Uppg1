@@ -1,11 +1,13 @@
 package ui;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import backend.Stock;
@@ -17,16 +19,28 @@ public class Graph extends JPanel {
 	private Color color;
 	private MouseListener mouseListener;
 	private Stock stock1, stock2;
+	private JLabel label1, label2;
 	
 	public Graph() {
 		lines = new LinkedList<Line>();
 		color = Color.RED;
-		
+		initFonts();
 		//Mouse listener
 		mouseListener = new MouseListener(this);
 		addMouseMotionListener(mouseListener);
 	}
 	
+	private void initFonts() {
+	    label1 = new JLabel("");
+	    label2 = new JLabel("");
+	    label1.setFont(new Font("Arial",1,10));
+	    label2.setFont(new Font("Arial", 1, 10));
+	    label1.setForeground(Color.RED);
+	    label2.setForeground(Color.GREEN);
+	    add(label1);
+	    add(label2);
+	}
+
 	public void drawDiagram(ArrayList<Double> stockValues, ArrayList<String> stockDates, Color color) {
 		double minValue = Collections.min(stockValues);
 		double maxValue =  Collections.max(stockValues); 
@@ -87,6 +101,14 @@ public class Graph extends JPanel {
 	
 	public Stock getStock2() {
 		return stock2;
+	}
+	
+	public JLabel getLabel1() {
+		return label1;
+	}
+	
+	public JLabel getLabel2() {
+		return label2;
 	}
 }
 
