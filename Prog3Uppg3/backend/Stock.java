@@ -126,12 +126,12 @@ public class Stock {
 		String out = "";
 		ArrayList<String> curr = currency.getCurr();
 		double v = Double.parseDouble(values.get(index).split(",")[4]);
-		double c = Double.parseDouble(curr.get(index).split(",")[4]);
-		double o = Double.parseDouble(curr.get(index).split(",")[1]);
-		o = round(o, 2);
-		c = round(c*v, 2);
+		double l = Double.parseDouble(curr.get(index).split(",")[3]);
+		double h = Double.parseDouble(curr.get(index).split(",")[2]);
+		h = round(h * v, 2);
+		l = round(l*v, 2);
 		String[] temp = values.get(index + 1).split(",");
-		out = temp[0] + " Stock: " + stock + "Open: " + o + " Close: " + c + " Change: "
+		out = temp[0] + " Stock: " + stock + " High: " + h + " Low: " + l + " Change: "
 		+ calculateProcent(index) + "%";
 		return out;
 	}
@@ -148,8 +148,8 @@ public class Stock {
 		double procentualDifference = 0;
 		double startValue = Double.parseDouble(values.get(1).split(",")[4]);
 		double newValue  = Double.parseDouble(values.get(place).split(",")[4]);
-		procentualDifference = startValue - newValue;
-		procentualDifference = (startValue/procentualDifference) * 100;
+		procentualDifference = startValue / 100;
+		procentualDifference = (newValue/procentualDifference) - 100;
 		return procentualDifference; 
 	}
 	
