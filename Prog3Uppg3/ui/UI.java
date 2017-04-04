@@ -11,12 +11,12 @@ import javax.swing.*;
 
 import backend.Stock;
 import backend.Stock.InvalidDateExeption;
+import controller.MouseListener;
+import controller.QueryButtonListener;
 import general.Constants;
 
 public class UI extends JFrame {
 	private final String TITLE = "Aktieanalys";
-	private final int WINDOW_WIDTH = 500;
-	private final int WINDOW_HEIGHT = 700;
 	
 	private String selectedCurrency;
 	
@@ -31,7 +31,7 @@ public class UI extends JFrame {
 	//Initializes the UI
 	public UI() {
         setTitle(TITLE); 
-        setSize(WINDOW_WIDTH, WINDOW_HEIGHT); 
+        setSize(Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT); 
         setLocationRelativeTo(null);
         setResizable(false);
         
@@ -57,47 +57,48 @@ public class UI extends JFrame {
 	private void initButtons() {
 		button = new JButton("------- Do Query -------");
 		button.setAlignmentX(this.CENTER_ALIGNMENT);
-		button.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				buttonClicked();
-			}
-		});
+		button.addActionListener(new QueryButtonListener(this));
+//		button.addActionListener(new ActionListener() {
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				buttonClicked();
+//			}
+//		});
 		fieldPanel.add(button);
 	}
 	
-	//Action when "Do Querry" button is clicked
-	private void buttonClicked() {
-		//If text aren't filled, break
-		if (textFieldsAreFilled() == false) {
-			textArea.setText("One or more text fields are empty.\nPlease enter the information and try again.");
-			return;
-		}
-		String ticker1 = textFields[0].getText();
-		String ticker2 = textFields[1].getText();
-		String startDate = textFields[2].getText();
-		String endDate = textFields[3].getText();
-		updateSelectedCurrency();
-		try {
-			Stock stock1 = new Stock(ticker1, startDate, endDate, selectedCurrency);
-			Stock stock2 = new Stock(ticker2, startDate, endDate, selectedCurrency);
-			textArea.setText(stock1.getData(stock2));
-			
-			graph.clear();
-			graph.drawDiagram(stock1.withCurr(), stock1.getOnlyValues(Constants.DATE), Color.RED);
-			graph.drawDiagram(stock2.withCurr(), stock2.getOnlyValues(Constants.DATE), Color.GREEN);
-		} catch (InvalidDateExeption e) {
-			textArea.setText("Invalid date\nEnter the date in the specified format.");
-		} catch (IOException e2) {
-			textArea.setText("Could not find data.\nTicker entered is invalid or there is no internet connection");
-		} catch (IndexOutOfBoundsException e) {
-			textArea.setText("Could not find the currency data or the stock data for the given time\nChange the currency or date.");
-		} catch (Exception e) {
-			textArea.setText(e.getMessage());
-		}
-	}
+//	//Action when "Do Querry" button is clicked
+//	private void buttonClicked() {
+//		//If text aren't filled, break
+//		if (textFieldsAreFilled() == false) {
+//			textArea.setText("One or more text fields are empty.\nPlease enter the information and try again.");
+//			return;
+//		}
+//		String ticker1 = textFields[0].getText();
+//		String ticker2 = textFields[1].getText();
+//		String startDate = textFields[2].getText();
+//		String endDate = textFields[3].getText();
+//		updateSelectedCurrency();
+//		try {
+//			Stock stock1 = new Stock(ticker1, startDate, endDate, selectedCurrency);
+//			Stock stock2 = new Stock(ticker2, startDate, endDate, selectedCurrency);
+//			textArea.setText(stock1.getData(stock2));
+//			
+//			graph.clear();
+//			graph.drawDiagram(stock1.withCurr(), stock1.getOnlyValues(Constants.DATE), Color.RED);
+//			graph.drawDiagram(stock2.withCurr(), stock2.getOnlyValues(Constants.DATE), Color.GREEN);
+//		} catch (InvalidDateExeption e) {
+//			textArea.setText("Invalid date\nEnter the date in the specified format.");
+//		} catch (IOException e2) {
+//			textArea.setText("Could not find data.\nTicker entered is invalid or there is no internet connection");
+//		} catch (IndexOutOfBoundsException e) {
+//			textArea.setText("Could not find the currency data or the stock data for the given time\nChange the currency or date.");
+//		} catch (Exception e) {
+//			textArea.setText(e.getMessage());
+//		}
+//	}
 	
-	private boolean textFieldsAreFilled() {
+	public boolean textFieldsAreFilled() {
 		for (int i = 0; i < textFields.length; i++) {
 			if (textFields[i].getText().equals("")) return false;
 		}
@@ -128,7 +129,7 @@ public class UI extends JFrame {
 	}
 	
 	//Updates the selected currency 
-	private void updateSelectedCurrency() {
+	public void updateSelectedCurrency() {
 		if (radioButtons[0].isSelected()) selectedCurrency = Constants.EUR;
 		if (radioButtons[1].isSelected()) selectedCurrency = Constants.USD;
 		if (radioButtons[2].isSelected()) selectedCurrency = Constants.SEK;
@@ -171,5 +172,28 @@ public class UI extends JFrame {
 		graph.setBackground(Color.BLACK);
 		graph.setMinimumSize(new Dimension(500, 200));
 		add(graph);
+	}
+	
+	//Getters
+	public String getSelectedCurrency() {
+		return selectedCurrency;
+	}
+	public JPanel getFieldPanel() {
+		return fieldPanel;
+	}
+	public JTextField[] getTextFields() {
+		return textFields;
+	}
+	public JRadioButton[] getRadioButtons() {
+		return radioButtons;
+	}
+	public JButton getButton() {
+		return button;
+	}
+	public JTextArea getTextArea() {
+		return textArea;
+	}
+	public Graph getGraph() {
+		return graph;
 	}
 }

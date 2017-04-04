@@ -6,6 +6,8 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
 
+import general.Constants;
+
 public class Stock {
 	private String url;
 	private ArrayList<String> values;
@@ -114,17 +116,23 @@ public class Stock {
 		return temp;
 	}
 	//Returns the same string as getData but only one line.
-	public String getSingleData(int place){
+	public String getSingleData(int coordinateX) {
+		double tempIndex = (double) coordinateX/ (double )Constants.WINDOW_WIDTH * (double) values.size();
+		int index = (int) tempIndex;
+		if (index == 0) index = 1;
+		
+		System.out.println("Index : " + index + " / " + values.size());
+		
 		String out = "";
 		ArrayList<String> curr = currency.getCurr();
-		double v = Double.parseDouble(values.get(place).split(",")[4]);
-		double c = Double.parseDouble(curr.get(place).split(",")[4]);
-		double o = Double.parseDouble(curr.get(place).split(",")[1]);
+		double v = Double.parseDouble(values.get(index).split(",")[4]);
+		double c = Double.parseDouble(curr.get(index).split(",")[4]);
+		double o = Double.parseDouble(curr.get(index).split(",")[1]);
 		o = round(o, 2);
 		c = round(c*v, 2);
-		String[] temp = values.get(place + 1).split(",");
+		String[] temp = values.get(index + 1).split(",");
 		out = temp[0] + " Stock: " + stock + "Open: " + o + " Close: " + c + " Change: "
-		+ calculateProcent(place) + "%";
+		+ calculateProcent(index) + "%";
 		return out;
 	}
 	
@@ -138,7 +146,7 @@ public class Stock {
 	
 	private double calculateProcent(int place){
 		double procentualDifference = 0;
-		double startValue = Double.parseDouble(values.get(0).split(",")[4]);
+		double startValue = Double.parseDouble(values.get(1).split(",")[4]);
 		double newValue  = Double.parseDouble(values.get(place).split(",")[4]);
 		procentualDifference = startValue - newValue;
 		procentualDifference = (startValue/procentualDifference) * 100;

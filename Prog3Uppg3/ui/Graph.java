@@ -8,14 +8,23 @@ import java.util.LinkedList;
 
 import javax.swing.JPanel;
 
+import backend.Stock;
+import controller.MouseListener;
+
 @SuppressWarnings("serial")
 public class Graph extends JPanel {
 	private LinkedList<Line> lines = new LinkedList<Line>();
 	private Color color;
+	private MouseListener mouseListener;
+	private Stock stock1, stock2;
 	
 	public Graph() {
 		lines = new LinkedList<Line>();
 		color = Color.RED;
+		
+		//Mouse listener
+		mouseListener = new MouseListener(this);
+		addMouseMotionListener(mouseListener);
 	}
 	
 	public void drawDiagram(ArrayList<Double> stockValues, ArrayList<String> stockDates, Color color) {
@@ -63,6 +72,22 @@ public class Graph extends JPanel {
 	        g.drawLine(line.getX1(), line.getY1(), line.getX2(), line.getY2());
 	    }
 	}	
+	
+	public void setStock1(Stock stock) {
+		this.stock1 = stock;
+	}
+	
+	public void setStock2(Stock stock) {
+		this.stock2 = stock;
+	}
+	
+	public Stock getStock1() {
+		return stock1;
+	}
+	
+	public Stock getStock2() {
+		return stock2;
+	}
 }
 
 

@@ -1,6 +1,9 @@
 package general;
 
 public final class Constants {
+	//UI Constants
+	public static final int WINDOW_WIDTH = 500;
+	public static final int WINDOW_HEIGHT = 700;
 	//CSV stock format constants
 	public static final int DATE = 0;
 	public static final int OPEN = 1;
