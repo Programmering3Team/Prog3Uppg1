@@ -114,15 +114,17 @@ public class Stock {
 		return temp;
 	}
 	//Returns the same string as getData but only one line.
-	public String getSingleData(int place,Stock theOtherOne){
+	public String getSingleData(int place){
 		String out = "";
 		ArrayList<String> curr = currency.getCurr();
-		ArrayList<Double> valuesNew2 = theOtherOne.withCurr();
 		double v = Double.parseDouble(values.get(place).split(",")[4]);
 		double c = Double.parseDouble(curr.get(place).split(",")[4]);
+		double o = Double.parseDouble(curr.get(place).split(",")[1]);
+		o = round(o, 2);
 		c = round(c*v, 2);
 		String[] temp = values.get(place + 1).split(",");
-		out = temp[0] + " Stock: " + stock + " close: " + c + " - Stock: " + theOtherOne.getStockName() + " close: " + valuesNew2.get(place);
+		out = temp[0] + " Stock: " + stock + "Open: " + o + " Close: " + c + " Change: "
+		+ calculateProcent(place) + "%";
 		return out;
 	}
 	
@@ -132,6 +134,15 @@ public class Stock {
 	    value = value * factor;
 	    long tmp = Math.round(value);
 	    return (double) tmp / factor;
+	}
+	
+	private double calculateProcent(int place){
+		double procentualDifference = 0;
+		double startValue = Double.parseDouble(values.get(0).split(",")[4]);
+		double newValue  = Double.parseDouble(values.get(place).split(",")[4]);
+		procentualDifference = startValue - newValue;
+		procentualDifference = (startValue/procentualDifference) * 100;
+		return procentualDifference; 
 	}
 	
 	//Custom exeptions
