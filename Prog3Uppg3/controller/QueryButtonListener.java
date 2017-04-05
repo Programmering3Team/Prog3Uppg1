@@ -41,8 +41,8 @@ public class QueryButtonListener implements ActionListener {
 			ui.getTextArea().setText(stock1.getData(stock2));
 			
 			ui.getGraph().clear();
-			ui.getGraph().drawDiagram(stock1.withCurr(), stock1.getOnlyValues(Constants.DATE), Color.RED);
-			ui.getGraph().drawDiagram(stock2.withCurr(), stock2.getOnlyValues(Constants.DATE), Color.GREEN);
+			ui.getGraph().drawDiagram(stock1.withCurr(), stock1.getOnlyValues(Constants.DATE), Color.RED, 1);
+			ui.getGraph().drawDiagram(stock2.withCurr(), stock2.getOnlyValues(Constants.DATE), Color.GREEN, 2);
 		} catch (InvalidDateExeption e) {
 			ui.getTextArea().setText("Invalid date\nEnter the date in the specified format.");
 		} catch (IOException e2) {

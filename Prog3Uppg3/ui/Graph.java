@@ -15,15 +15,21 @@ import controller.MouseListener;
 
 @SuppressWarnings("serial")
 public class Graph extends JPanel {
-	private LinkedList<Line> lines = new LinkedList<Line>();
-	private Color color;
+	private ArrayList<Line> lines1;
+	private ArrayList<Line> lines2;
+	private Line selectedLine1, selectedLine2;
+	private Color color1, color2, selectedColor1, selectedColor2;
 	private MouseListener mouseListener;
 	private Stock stock1, stock2;
 	private JLabel label1, label2;
 	
 	public Graph() {
-		lines = new LinkedList<Line>();
-		color = Color.RED;
+		lines1 = new ArrayList<Line>();
+		lines2 = new ArrayList<Line>();
+		color1 = Color.RED.darker();
+		color2 = Color.GREEN.darker();
+		selectedColor1 = Color.RED.brighter().brighter();
+		selectedColor2 = Color.GREEN.brighter().brighter();
 		initFonts();
 		//Mouse listener
 		mouseListener = new MouseListener(this);
@@ -35,13 +41,13 @@ public class Graph extends JPanel {
 	    label2 = new JLabel("");
 	    label1.setFont(new Font("Arial",1,10));
 	    label2.setFont(new Font("Arial", 1, 10));
-	    label1.setForeground(Color.RED);
-	    label2.setForeground(Color.GREEN);
+	    label1.setForeground(color1);
+	    label2.setForeground(color2);
 	    add(label1);
 	    add(label2);
 	}
 
-	public void drawDiagram(ArrayList<Double> stockValues, ArrayList<String> stockDates, Color color) {
+	public void drawDiagram(ArrayList<Double> stockValues, ArrayList<String> stockDates, Color color, int diagramNumber) {
 		double minValue = Collections.min(stockValues);
 		double maxValue =  Collections.max(stockValues); 
 		double valueRange = maxValue - minValue;
@@ -56,7 +62,11 @@ public class Graph extends JPanel {
 			int x2 = (int) (i * widthMultiplier);
 			int y2 = this.getHeight() - (getPosition(stockValues.get(i), scaleRange, valueRange, maxValue));
 
-			addLine(x1, y1, x2, y2, color);
+			if (diagramNumber == 1) {
+				addLine1(x1, y1, x2, y2, color);
+			} else {
+				addLine2(x1, y1, x2, y2, color);
+			}
 			x1 = x2;
 			y1 = y2;
 		}
@@ -68,21 +78,48 @@ public class Graph extends JPanel {
 		return y;
 	}
 
-	private void addLine(int x1, int y1, int x2, int y2, Color color) {
-	    lines.add(new Line(x1,y1,x2,y2, color));        
+	private void addLine1(int x1, int y1, int x2, int y2, Color color) {
+	    lines1.add(new Line(x1,y1,x2,y2, color));        
 	    repaint();
+	}
+	private void addLine2(int x1, int y1, int x2, int y2, Color color) {
+	    lines2.add(new Line(x1,y1,x2,y2, color));        
+	    repaint();
+	}
+	
+	public void setSelectedLine1(int lineIndex) {
+		selectedLine1 = lines1.get(lineIndex);
+		repaint();
+	}
+	
+	public void setSelectedLine2(int lineIndex) {
+		selectedLine2 = lines2.get(lineIndex);
+		repaint();
 	}
 
 	public void clear() {
-	    lines.clear();
+	    lines1.clear();
+	    lines2.clear();
 	    repaint();
 	}
 	
 	@Override
 	protected void paintComponent(Graphics g) {
 	    super.paintComponent(g);
-	    for (Line line : lines) {
-	        g.setColor(line.getColor());
+	    for (Line line : lines1) {
+	    	if (line == selectedLine1) {
+		        g.setColor(selectedColor1);
+	    	} else {
+		        g.setColor(color1);
+	    	}
+	        g.drawLine(line.getX1(), line.getY1(), line.getX2(), line.getY2());
+	    }
+	    for (Line line : lines2) {
+	    	if (line == selectedLine2) {
+		        g.setColor(selectedColor2);
+	    	} else {
+		        g.setColor(color2);
+	    	}
 	        g.drawLine(line.getX1(), line.getY1(), line.getX2(), line.getY2());
 	    }
 	}	

@@ -1,8 +1,10 @@
 package controller;
 
+import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 
+import general.Constants;
 import ui.Graph;
 
 public class MouseListener implements MouseMotionListener{
@@ -27,8 +29,18 @@ public class MouseListener implements MouseMotionListener{
 		this.y = e.getY();
 //		System.out.println("musen på " + (e.getX() + ", " + e.getY()));
 		if (graph.getStock1() != null) {
-			graph.getLabel1().setText(graph.getStock1().getSingleData(x));
-			graph.getLabel2().setText(graph.getStock2().getSingleData(x));
+			
+			double tempIndex = (double) x / (double) Constants.WINDOW_WIDTH * (double) graph.getStock1().getValues().size();
+			int index1 = (int) tempIndex;
+			graph.setSelectedLine1(index1);
+			if (index1 == 0) index1 = 1;
+			graph.getLabel1().setText(graph.getStock1().getSingleData(index1));
+			
+			double tempIndex2 = (double) x / (double) Constants.WINDOW_WIDTH * (double) graph.getStock2().getValues().size();
+			int index2 = (int) tempIndex2;
+			graph.setSelectedLine2(index2);
+			if (index2 == 0) index2 = 1;
+			graph.getLabel2().setText(graph.getStock2().getSingleData(index2));
 		}
 	}
 
