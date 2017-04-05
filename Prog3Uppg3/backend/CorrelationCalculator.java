@@ -6,7 +6,7 @@ import general.Constants;
 
 public class CorrelationCalculator {
 	
-	public static double calculate(Stock stock1, Stock stock2){
+	public static double getCorreltation(Stock stock1, Stock stock2){
 		ArrayList<Double> stockListX = convertToDouble(stock1.getOnlyValues(Constants.ADJ_CLOSE));
 		ArrayList<Double> stockListY = convertToDouble(stock2.getOnlyValues(Constants.ADJ_CLOSE));
 		double averageX = getAverage(stockListX);

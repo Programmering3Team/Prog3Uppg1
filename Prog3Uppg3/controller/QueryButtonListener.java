@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
+import backend.CorrelationCalculator;
 import backend.Stock;
 import backend.Stock.InvalidDateExeption;
 import general.Constants;
@@ -38,7 +39,7 @@ public class QueryButtonListener implements ActionListener {
 			Stock stock2 = new Stock(ticker2, startDate, endDate, ui.getSelectedCurrency());
 			ui.getGraph().setStock1(stock1);
 			ui.getGraph().setStock2(stock2);
-			ui.getTextArea().setText(stock1.getData(stock2));
+			ui.getTextArea().setText(stock1.getData(stock2) + "Correlation: " + CorrelationCalculator.getCorreltation(stock1, stock2));
 			
 			ui.getGraph().clear();
 			ui.getGraph().drawDiagram(stock1.withCurr(), stock1.getOnlyValues(Constants.DATE), Color.RED, 1);

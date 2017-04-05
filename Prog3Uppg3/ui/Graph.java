@@ -56,12 +56,14 @@ public class Graph extends JPanel {
 		double widthMultiplier = ((this.getWidth()*1.06f) / stockValues.size());
 	
 		int x1 = 0;
-		int y1 = this.getHeight() - (getPosition(stockValues.get(0), scaleRange, valueRange, maxValue));
+//		int y1 = this.getHeight() - (getPosition(stockValues.get(0), scaleRange, valueRange, maxValue));
+		int y1 = getPosition(stockValues.get(0), scaleRange, valueRange, maxValue);
 		
 		for (int i = 1; i < stockValues.size(); i++) {
 			int x2 = (int) (i * widthMultiplier);
-			int y2 = this.getHeight() - (getPosition(stockValues.get(i), scaleRange, valueRange, maxValue));
-
+//			int y2 = this.getHeight() - (getPosition(stockValues.get(i), scaleRange, valueRange, maxValue));
+			int y2 = getPosition(stockValues.get(i), scaleRange, valueRange, maxValue);
+			
 			if (diagramNumber == 1) {
 				addLine1(x1, y1, x2, y2, color);
 			} else {
