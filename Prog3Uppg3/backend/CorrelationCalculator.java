@@ -37,11 +37,12 @@ public class CorrelationCalculator {
 		return average;
 	}
 	private static double getCoveriance(double averageX, double averageY, ArrayList<Double> stocksX, ArrayList<Double> stocksY){
-		double covariance = 0;
+		double coveriance = 0;
 		for (int i = 0; i < stocksX.size(); i++) {
-			covariance += (stocksX.get(i) - averageX) * (stocksY.get(i) - averageY);
+			coveriance += (stocksX.get(i) - averageX) * (stocksY.get(i) - averageY);
 		}
-		return covariance;
+		coveriance = coveriance/stocksX.size();
+		return coveriance;
 	}
 	
 	private static double getStandardDeviation(double average, ArrayList<Double> stocks){
