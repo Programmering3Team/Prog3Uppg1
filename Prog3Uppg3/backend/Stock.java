@@ -116,10 +116,7 @@ public class Stock {
 		return temp;
 	}
 	//Returns the same string as getData but only one line.
-	public String getSingleData(int coordinateX) {
-		double tempIndex = (double) coordinateX/ (double )Constants.WINDOW_WIDTH * (double) values.size();
-		int index = (int) tempIndex;
-		if (index == 0) index = 1;
+	public String getSingleData(int index) {
 		
 		System.out.println("Index : " + index + " / " + values.size());
 		
