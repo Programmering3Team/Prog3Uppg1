@@ -33,7 +33,7 @@ public class UI extends JFrame {
         setTitle(TITLE); 
         setSize(WINDOW_WIDTH, WINDOW_HEIGHT); 
         setLocationRelativeTo(null);
-        setResizable(false);
+        setResizable(true);
         
         //layout
         setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS)); //Layout for the frame
