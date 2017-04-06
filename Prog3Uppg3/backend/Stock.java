@@ -116,9 +116,11 @@ public class Stock {
 		return temp;
 	}
 	//Returns the same string as getData but only one line.
-	public String getSingleData(int index) {
+	public String getSingleData(int orgIndex) {
+		int index = orgIndex;
+		if (index > values.size()-1) index = values.size()-1;
 		
-		System.out.println("Index : " + index + " / " + values.size());
+//		System.out.println("Index : " + index + " / " + values.size());
 		
 		String out = "";
 		ArrayList<String> curr = currency.getCurr();
@@ -127,7 +129,7 @@ public class Stock {
 		double h = Double.parseDouble(curr.get(index).split(",")[2]);
 		h = round(h * v, 2);
 		l = round(l*v, 2);
-		String[] temp = values.get(index + 1).split(",");
+		String[] temp = values.get(index).split(",");
 		out = temp[0] + " Stock: " + stock + " High: " + h + " Low: " + l + " Change: "
 		+ calculateProcent(index) + "%";
 		return out;
