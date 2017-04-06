@@ -28,8 +28,8 @@ public class Graph extends JPanel {
 		lines2 = new ArrayList<Line>();
 		color1 = Color.RED.darker();
 		color2 = Color.GREEN.darker();
-		selectedColor1 = Color.RED.brighter().brighter();
-		selectedColor2 = Color.GREEN.brighter().brighter();
+		selectedColor1 = Color.ORANGE;
+		selectedColor2 = Color.WHITE;
 		initFonts();
 		//Mouse listener
 		mouseListener = new MouseListener(this);
