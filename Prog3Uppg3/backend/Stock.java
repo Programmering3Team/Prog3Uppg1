@@ -6,6 +6,8 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
 
+import general.Constants;
+
 public class Stock {
 	private String url;
 	private ArrayList<String> values;
@@ -114,15 +116,20 @@ public class Stock {
 		return temp;
 	}
 	//Returns the same string as getData but only one line.
-	public String getSingleData(int place,Stock theOtherOne){
+	public String getSingleData(int index) {
+		
+		System.out.println("Index : " + index + " / " + values.size());
+		
 		String out = "";
 		ArrayList<String> curr = currency.getCurr();
-		ArrayList<Double> valuesNew2 = theOtherOne.withCurr();
-		double v = Double.parseDouble(values.get(place).split(",")[4]);
-		double c = Double.parseDouble(curr.get(place).split(",")[4]);
-		c = round(c*v, 2);
-		String[] temp = values.get(place + 1).split(",");
-		out = temp[0] + " Stock: " + stock + " close: " + c + " - Stock: " + theOtherOne.getStockName() + " close: " + valuesNew2.get(place);
+		double v = Double.parseDouble(values.get(index).split(",")[4]);
+		double l = Double.parseDouble(curr.get(index).split(",")[3]);
+		double h = Double.parseDouble(curr.get(index).split(",")[2]);
+		h = round(h * v, 2);
+		l = round(l*v, 2);
+		String[] temp = values.get(index + 1).split(",");
+		out = temp[0] + " Stock: " + stock + " High: " + h + " Low: " + l + " Change: "
+		+ calculateProcent(index) + "%";
 		return out;
 	}
 	
@@ -132,6 +139,15 @@ public class Stock {
 	    value = value * factor;
 	    long tmp = Math.round(value);
 	    return (double) tmp / factor;
+	}
+	
+	private double calculateProcent(int place){
+		double procentualDifference = 0;
+		double startValue = Double.parseDouble(values.get(1).split(",")[4]);
+		double newValue  = Double.parseDouble(values.get(place).split(",")[4]);
+		procentualDifference = startValue / 100;
+		procentualDifference = (newValue/procentualDifference) - 100;
+		return procentualDifference; 
 	}
 	
 	//Custom exeptions
