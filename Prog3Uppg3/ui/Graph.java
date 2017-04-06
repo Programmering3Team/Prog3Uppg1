@@ -12,7 +12,6 @@ import javax.swing.JPanel;
 
 import backend.Stock;
 import controller.MouseListener;
-import general.Constants;
 
 @SuppressWarnings("serial")
 public class Graph extends JPanel {
@@ -54,13 +53,15 @@ public class Graph extends JPanel {
 		double valueRange = maxValue - minValue;
 		double scaleRange = this.getHeight();
 		
-		double widthMultiplier = ((double) this.getWidth() / (double) (stockValues.size()-1));
+		double widthMultiplier = ((this.getWidth()*1.06f) / stockValues.size());
 	
-		int x1 = 0;
+		int x1 = this.getWidth();
+//		int y1 = this.getHeight() - (getPosition(stockValues.get(0), scaleRange, valueRange, maxValue));
 		int y1 = getPosition(stockValues.get(0), scaleRange, valueRange, maxValue);
 		
-		for (int i = 1; i < stockValues.size()-1; i++) {
+		for (int i = stockValues.size()-1; i >= 0; i--) {
 			int x2 = (int) (i * widthMultiplier);
+//			int y2 = this.getHeight() - (getPosition(stockValues.get(i), scaleRange, valueRange, maxValue));
 			int y2 = getPosition(stockValues.get(i), scaleRange, valueRange, maxValue);
 			
 			if (diagramNumber == 1) {
@@ -89,16 +90,12 @@ public class Graph extends JPanel {
 	}
 	
 	public void setSelectedLine1(int lineIndex) {
-		int index = lineIndex;
-		if (lineIndex > lines1.size()-1) index = lines1.size()-1;
-		selectedLine1 = lines1.get(index);
+		selectedLine1 = lines1.get(lineIndex);
 		repaint();
 	}
 	
 	public void setSelectedLine2(int lineIndex) {
-		int index = lineIndex;
-		if (lineIndex > lines2.size()-1) index = lines2.size()-1;
-		selectedLine2 = lines2.get(index);
+		selectedLine2 = lines2.get(lineIndex);
 		repaint();
 	}
 

@@ -33,14 +33,14 @@ public class MouseListener implements MouseMotionListener{
 			
 			double tempIndex = (double) x / (double) Constants.WINDOW_WIDTH * (double) stock1Size;
 			int index1 = (int) tempIndex;
-			if (index1 > stock1Size) index1 = stock1Size-1;
+			if (index1 > stock1Size) index1 = stock1Size;
 			graph.setSelectedLine1(index1);
 			if (index1 == 0) index1 = 1;
 			graph.getLabel1().setText(graph.getStock1().getSingleData(index1));
 			
 			double tempIndex2 = (double) x / (double) Constants.WINDOW_WIDTH * (double) stock2Size;
 			int index2 = (int) tempIndex2;
-			if (index2 > stock2Size) index2 = stock2Size-1;
+			if (index2 > stock2Size) index2 = stock2Size;
 			graph.setSelectedLine2(index2);
 			if (index2 == 0) index2 = 1;
 			graph.getLabel2().setText(graph.getStock2().getSingleData(index2));
