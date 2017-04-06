@@ -53,7 +53,7 @@ public class Graph extends JPanel {
 		double maxValue =  Collections.max(stockValues); 
 		double valueRange = maxValue - minValue;
 		double scaleRange = this.getHeight();
-		
+		//...
 		double widthMultiplier = ((double) this.getWidth() / (double) (stockValues.size()-1));
 	
 		int x1 = 0;
